@@ -109,7 +109,7 @@ export const sendVerifyOtp = async (req, res) => {
 
     const user = await userModel.findById(userId);
 
-    if (user.isAccountVerified) {
+    if (user.isVerified) {
       return res.json({ success: false, message: "Account already verified" });
     }
 
@@ -156,7 +156,7 @@ export const verifyEmail = async (req, res) => {
       return res.json({ success: false, message: "OTP Expired" });
     }
 
-    user.isAccountVerified = true;
+    user.isVerified = true;
     user.verifyOtp = "";
     user.verifyOtpExpireAt = 0;
 

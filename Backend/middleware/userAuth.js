@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import { defaultMaxListeners } from "nodemailer/lib/xoauth2";
 
 const userAuth = async (req, res, next) => {
   const { token } = req.cookies;
