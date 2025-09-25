@@ -1,9 +1,9 @@
 import express from "express";
-import userAuth from "../middleware/userAuth.js";
+import userData from "../middleware/userData.js";
 import { getUserData } from "../controllers/userController.js";
 
 const userRouter = express.Router();
 
-userRouter.get("/data", userAuth, getUserData);
+userRouter.get("/data", userData, getUserData);
 
 export default userRouter;

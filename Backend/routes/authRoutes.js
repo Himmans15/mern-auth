@@ -10,6 +10,7 @@ import {
   verifyEmail,
 } from "../controllers/authController.js";
 import userAuth from "../middleware/userAuth.js";
+import userData from "../middleware/userData.js";
 
 const authRouter = express.Router();
 
@@ -18,7 +19,7 @@ authRouter.post("/login", login);
 authRouter.post("/logout", logout);
 authRouter.post("/send-verify-otp", userAuth, sendVerifyOtp);
 authRouter.post("/verify-account", userAuth, verifyEmail);
-authRouter.get("/is-auth", userAuth, isAuthenticated);
+authRouter.get("/is-auth", userData, isAuthenticated);
 authRouter.post("/sent-reset-otp", sendResetOtp);
 authRouter.post("/reset-password", resetPassword);
 
