@@ -1,6 +1,31 @@
-import React from "react";
+import React, { useRef } from "react";
 import { assets } from "../assets/assets";
+
 const EmailVerify = () => {
+  const inputRefs = useRef([]);
+
+  const handleInput = (e, idx) => {
+    if (e.target.value.length > 0 && idx < inputRefs.current.length - 1) {
+      inputRefs.current[idx + 1].focus();
+    }
+  };
+
+  const handleKeyDown = (e, idx) => {
+    if (e.key === "Backspace" && e.target.value === "" && idx > 0) {
+      inputRefs.current[idx - 1].focus();
+    }
+  };
+
+  const handlePaste = (e) => {
+    const paste = e.clipboardData.getData("text");
+    const pasteArray = paste.split("");
+    pasteArray.forEach((char, idx) => {
+      if (inputRefs.current[idx]) {
+        inputRefs.current[idx].value = char;
+      }
+    });
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen px-6 sm:px-0 bg-gradient-to-br from-blue-200 to-purple-400">
       <img
@@ -16,9 +41,32 @@ const EmailVerify = () => {
         <p className="text-center mb-6 text-indigo-300">
           Enter the 6-digit code sent to your email id.
         </p>
+        <div
+          className="flex justify-between mb-8"
+          onPaste={(e) => handlePaste(e)}
+        >
+          {Array(6)
+            .fill(0)
+            .map((_, idx) => (
+              <input
+                type="text"
+                maxLength="1"
+                key={idx}
+                required
+                className="w-12 h-12 bg-[#333A5C] text-white text-center text-xl rounded-md"
+                ref={(e) => (inputRefs.current[idx] = e)}
+                onInput={(e) => handleInput(e, idx)}
+                onKeyDown={(e) => handleKeyDown(e, idx)}
+              />
+            ))}
+        </div>
+        <button className="w-full py-3 bg-gradient-to-r from-indigo-500 to-indigo-900 text-white rounded-full">
+          Verify Emaail
+        </button>
       </form>
     </div>
   );
 };
 
 export default EmailVerify;
+// 123456
